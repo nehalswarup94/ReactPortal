@@ -1,0 +1,30 @@
+@import '../../config_colors.scss'; 
+
+.portal-header{
+    font-family:titillium web,sans-serif;
+    color:$heading_color;
+    padding: 1rem 2rem;
+    display:flex;
+    font-weight: 600;
+    font-size: 2rem;
+
+    .portal-link{
+        flex-basis: 80%;
+    }
+
+    .options{
+        flex-basis: 20%;
+
+
+        .option-links{
+            font-size: 1rem;
+            color: $header_links;
+            padding: 0 0.5rem;
+            text-decoration: none;
+
+            &:active, &:hover{
+                color:$dark_color;
+            }
+        }
+    }
+}

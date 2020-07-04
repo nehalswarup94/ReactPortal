@@ -1,0 +1,58 @@
+@import '../../config_colors.scss';
+
+.login-div{
+    display: flex;
+    align-items:center;
+    vertical-align:center;
+    justify-content: center;
+    flex-direction: column;
+
+    .signin-title{
+        font-size: 2.5rem;
+        margin-bottom: .5rem;
+        font-weight: 500;
+        line-height: 1.1;
+    }
+
+    .redirect-link{
+        color:$heading_color;
+        text-decoration: none;
+        background-color: transparent;
+
+        &:hover, &:active{
+            text-decoration: underline;
+        }
+    }
+
+    .signin-section{
+        display: flex;
+        flex-direction: column;
+
+        .input-field{
+            width: 33rem;
+            height: 3rem;
+            padding: .75rem 1.5rem;
+            font-size: 1.25rem;
+            border-radius: .3rem;
+            color: #55595c;
+            background-color: #fff;
+            background-image: none;
+            background-clip: padding-box;
+            border: 1px solid rgba(0,0,0,.15);
+        }
+
+        .signin-btn{
+            float: right;
+            background-color: $heading_color;
+            border-color: $heading_color;
+            color:white;
+
+            &:active, &:hover{
+                background-color: #449d44 !important;
+                border-color: #449d44 !important;
+            }
+        }
+    }
+
+    
+}

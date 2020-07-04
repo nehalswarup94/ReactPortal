@@ -1,0 +1,34 @@
+@import '../../config_colors.scss'; 
+
+.post-heading-div{
+    display: flex;
+    align-items: center;
+    vertical-align: middle;
+    justify-content: center;
+    flex-direction: column;
+    background-color: $heading_color;
+    color: white;
+    width: 100%;
+    height: 20%;
+    padding: 3rem 0;
+    margin-bottom: 1rem;
+
+    .my-portal{
+        margin: 0;
+    }
+    .headline{
+        margin: 0;
+        padding-top: 1rem;
+    }
+}
+
+.load-feed{
+    color: $heading_color;
+    font-weight: 600;
+    font-size: 1.5rem;
+    padding-bottom: 1rem;
+
+    &:active, &:hover{
+        text-decoration: none;
+    }
+}
