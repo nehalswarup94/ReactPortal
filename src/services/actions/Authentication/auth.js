@@ -1,6 +1,34 @@
-import {REGISTER_USER, LOGIN} from '../actionTypes';
 import axios from 'axios';
+import { REGISTER_SUCCESS, REGISTER_FAIL, USER_LOADED, AUTH_ERROR, LOGIN_SUCCESS, LOGIN_FAIL, LOGOUT } from '../actionTypes';
+import setAuthToken from '../../../utils/setAuthToken';
 
+//Load user
+
+export const loadUser = () => async dispatch => {
+    //check if token present, put it in global header
+    if (localStorage.token) {
+        setAuthToken(localStorage.token);
+    }
+    const token = localStorage.token;
+    try {
+        const res = await axios.get('https://conduit.productionready.io/api/user', {
+            headers: {
+                authorization: `Token ${token}`
+            }
+        });
+        dispatch({
+            type: USER_LOADED,
+            payload: res.data
+        });
+    }
+    catch (err) {
+        dispatch({
+            type: AUTH_ERROR
+        });
+    }
+}
+
+//Register user
 export const registerUser = user => async dispatch => {
     const config = {
         headers: {
@@ -10,13 +38,18 @@ export const registerUser = user => async dispatch => {
 
     const body = JSON.stringify(user);
 
-    const res= await axios.post('https://conduit.productionready.io/api/users',body,config);
-    localStorage.setItem('token',res.data['user'].token)
-    console.log(res.data)
+    try {
+        const res = await axios.post('https://conduit.productionready.io/api/users', body, config);
         dispatch({
-        type: REGISTER_USER,
-        payload: res.data['user'].token
-      });
+            type: REGISTER_SUCCESS,
+            payload: res.data['user'].token
+        });
+    }
+    catch (err) {
+        dispatch({
+            type: REGISTER_FAIL
+        });
+    }
 }
 
 export const login = user => async dispatch => {
@@ -27,11 +60,24 @@ export const login = user => async dispatch => {
     }
 
     const body = JSON.stringify(user);
-
-    const res= await axios.post('https://conduit.productionready.io/api/users/login',body,config);
-    localStorage.setItem('token',res.data['user'].token)
+    try {
+        const res = await axios.post('https://conduit.productionready.io/api/users/login', body, config);
         dispatch({
-        type: LOGIN,
-        payload: res.data['user']
-      });
+            type: LOGIN_SUCCESS,
+            payload: res.data
+        });
+    }
+    catch (err) {
+        dispatch({
+            type: LOGIN_FAIL
+        })
+    }
+}
+
+//logout
+
+export const logout = () => dispatch => {
+    dispatch({
+        type: LOGOUT
+    });
 }

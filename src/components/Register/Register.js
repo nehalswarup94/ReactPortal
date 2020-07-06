@@ -1,6 +1,6 @@
 import React from 'react';
 import './Register.scss';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { registerUser } from '../../services/actions/Authentication/auth';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -27,9 +27,13 @@ class Register extends React.Component {
             }
         }
         this.props.registerUser(user);
+        //this.props.history.push('/');
     }
 
     render() {
+        if(this.props.isAuthenticated){
+            return <Redirect to="/"/>;
+        }
         return (
             <div className='register-div'>
                 <h3 className='signup-title'>Sign Up</h3>
@@ -46,7 +50,12 @@ class Register extends React.Component {
 }
 
 Register.propTypes = {
+    isAuthenticated:PropTypes.bool,
     registerUser: PropTypes.func.isRequired
 }
+
+const mapStateToProps = state => ({
+    isAuthenticated: state.auth.isAuthenticated
+})
 
 export default connect(null, { registerUser })(Register);

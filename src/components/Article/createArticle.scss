@@ -1,0 +1,25 @@
+@import '../../config_colors.scss'; 
+
+.create-article{
+    display: flex;
+    justify-content: center;
+    vertical-align: middle;
+
+    .article-title,.article-desc,.article-body,.article-tags{
+        width: 50rem;
+        height: 3rem;
+        padding: 0.5rem 0.75rem;
+        border: 1px solid lightgrey;
+    }
+
+    .article-body{
+        height: 10rem;
+    }
+
+    .publish-article{
+        background-color: $heading_color;
+        color:white;
+        border-radius: 0.2rem;
+        float: right;
+    }
+}

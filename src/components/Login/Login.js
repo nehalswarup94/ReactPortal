@@ -1,10 +1,10 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link,Redirect } from 'react-router-dom';
 import { login } from '../../services/actions/Authentication/auth';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-
 import './Login.scss';
+import authReducer from '../../services/reducers/authReducer';
 
 class Login extends React.Component {
     state = {
@@ -17,7 +17,6 @@ class Login extends React.Component {
     }
 
     handleLogin = () => {
-
         const user = {
             user:
             {
@@ -26,10 +25,13 @@ class Login extends React.Component {
             }
         }
         this.props.login(user);
-
+        //this.props.history.push('/');
     }
 
     render() {
+        if(this.props.isAuthenticated){
+            return <Redirect to="/"/>;
+        }
         return (
             <div className='login-div'>
                 <h3 className='signin-title'>Sign In</h3>
@@ -45,7 +47,13 @@ class Login extends React.Component {
 }
 
 Login.propTypes = {
+    isAuthenticated:PropTypes.bool,
     login: PropTypes.func.isRequired
 }
 
-export default connect(null, { login })(Login);
+const mapStateToProps = state => ({
+    isAuthenticated: state.auth.isAuthenticated
+})
+
+
+export default connect(mapStateToProps,{ login })(Login);

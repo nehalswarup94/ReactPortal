@@ -7,27 +7,42 @@ import Register from './components/Register/Register';
 import Article from './components/Article/Article';
 import EditArticle from './components/Article/EditArticle';
 import CreateArticle from './components/Article/CreateArticle';
+import ProfileSettings from './components/Profile/ProfileSettings';
+import Profile from './components/Profile/Profile';
+//redux
 import { Provider } from 'react-redux';
 import store from './store';
+import setAuthToken from './utils/setAuthToken';
+import { loadUser } from './services/actions/Authentication/auth';
+
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+if (localStorage.token) {
+  setAuthToken(localStorage.token);
+}
+
 class App extends React.Component {
+  componentDidMount() {
+    store.dispatch(loadUser());
+  }
   render() {
     return (
       <Provider store={store}>
         <Router>
           <div className='portal-main'>
             <Header />
-            <div>
+            <Route exact path='/' component={Posts} />
+            <>
               <Switch>
-                <Route exact path='/' component={Posts} />
                 <Route exact path='/login' component={Login} />
                 <Route exact path='/register' component={Register} />
                 <Route exact path='/article/:name' component={Article} />
-                <Route exact path='/create' component={CreateArticle} />
-                <Route exact path='/edit' component={EditArticle} />
+                <Route exact path='/createarticle' component={CreateArticle} />
+                <Route exact path='/editarticle' component={EditArticle} />
+                <Route exact path='/profilesettings' component={ProfileSettings} />
+                <Route exact path='/profile' component={Profile} />
               </Switch>
-            </div>
+            </>
           </div>
         </Router>
       </Provider>
