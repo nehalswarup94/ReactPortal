@@ -1,6 +1,7 @@
 import React from 'react';
 import './Posts.scss';
 import ArticleCard from '../ArticleCard/ArticleCard.js';
+import Tags from '../Tags/Tags';
 import {Link} from 'react-router-dom';
 import {listArticles} from '../../services/actions/Article/articleActions';
 import PropTypes from 'prop-types';
@@ -45,7 +46,7 @@ class Posts extends React.Component {
                     <div className='row'>
                         <div className='col-xs-12 col-sm-10'>
                             <ul className='custom-nav-links'>
-                                <li className={localClass} onClick={this.fetchArticles.bind(this,'myFeed')}>Your Feed</li>
+                                {this.props.isAuthenticated===true && <li className={localClass} onClick={this.fetchArticles.bind(this,'myFeed')}>Your Feed</li>}
                                 <li className={globalClass} onClick={this.fetchArticles.bind(this,'global')}>Global Feed</li>
                             </ul>
                             <hr style={{marginTop:"-1px"}}></hr>
@@ -53,7 +54,7 @@ class Posts extends React.Component {
                             articlesList}
                         </div>
                         <div className='col-xs-12 col-sm-2'>
-                            Hi
+                            <Tags/>
                     </div>
                     </div>
                 </div>
@@ -64,10 +65,12 @@ class Posts extends React.Component {
 
 Posts.propTypes = {
     listArticles: PropTypes.array.isRequired,
+    isAuthenticated: PropTypes.bool.isRequired,
     articles: PropTypes.array.isRequired
 }
 
 const mapStateToProps = state => ({
-    articles:state.article.articles
+    articles:state.article.articles,
+    isAuthenticated: state.auth.isAuthenticated
 });
 export default connect(mapStateToProps,{listArticles})(Posts);

@@ -29,8 +29,7 @@ export const listArticles = () => async dispatch => {
     const token = localStorage.token;
     const config = {
         headers: {
-            'Content-Type': 'application/json',
-             'authorization' : `Token ${token}`
+            'Content-Type': 'application/json'
         }
     }
 
