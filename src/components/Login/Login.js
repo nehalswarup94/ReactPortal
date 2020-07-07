@@ -25,14 +25,13 @@ class Login extends React.Component {
             }
         }
         this.props.login(user);
-        //this.props.history.push('/');
     }
 
     render() {
-        if(this.props.isAuthenticated){
-            return <Redirect to="/"/>;
-        }
         return (
+            (this.props.isAuthenticated)?
+            <Redirect to="/"/>:
+            
             <div className='login-div'>
                 <h3 className='signin-title'>Sign In</h3>
                 <p><Link to='/register' className='redirect-link'>Need an account?</Link></p>

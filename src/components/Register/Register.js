@@ -31,10 +31,11 @@ class Register extends React.Component {
     }
 
     render() {
-        if(this.props.isAuthenticated){
-            return <Redirect to="/"/>;
-        }
+        console.log(this.props.isAuthenticated);
         return (
+            (this.props.isAuthenticated)?
+            <Redirect to="/"/>:
+            
             <div className='register-div'>
                 <h3 className='signup-title'>Sign Up</h3>
                 <p><Link to='/login' className='redirect-link'>Have an account?</Link></p>
@@ -58,4 +59,4 @@ const mapStateToProps = state => ({
     isAuthenticated: state.auth.isAuthenticated
 })
 
-export default connect(null, { registerUser })(Register);
+export default connect(mapStateToProps, { registerUser })(Register);

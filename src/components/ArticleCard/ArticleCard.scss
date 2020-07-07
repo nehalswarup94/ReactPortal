@@ -5,4 +5,19 @@
     padding:1rem 1rem;
     display: flex;
     
+    .fav-btn{
+        background-color: $heading-color;
+    }
+
+    .not-fav-btn{
+        border: 1px solid $heading-color;
+        background-color: white;
+        color: $heading-color;
+        width: 2.5rem;
+    }
+
+    .read-more{
+        color:lightgrey;
+        text-decoration: none;
+    }
 }

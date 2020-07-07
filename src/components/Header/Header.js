@@ -3,10 +3,13 @@ import './Header.scss';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import store from '../../store';
+import { loadUser } from '../../services/actions/Authentication/auth';
 
 class Header extends React.Component {
+    
     render() {
-        const { isAuthenticated, loading } = this.props.auth;
+        const { isAuthenticated, loading, user } = this.props.auth;
         const guestLinks = <div className='portal-header'>
                                 <div className='portal-link'>Portal</div>
                                 <div className='options'>
@@ -21,7 +24,7 @@ class Header extends React.Component {
                                 <Link to="/" className='option-links'>Home</Link>
                                 <Link to="/createarticle" className='option-links'>New Article</Link>
                                 <Link to="/profilesettings" className='option-links'>Settings</Link>
-                                <Link to="/profile" className='option-links'>Name</Link>
+                                {user&&<Link to="/profile" className='option-links'>{user.user.username}</Link>}
                             </div>
                         </div>
         return (
@@ -36,6 +39,7 @@ Header.propsTypes = {
 }
 
 const mapStateToProps = state => ({
-    auth: state.auth
+    auth: state.auth,
+    user: state.auth.user
 });
 export default connect(mapStateToProps, null)(Header);

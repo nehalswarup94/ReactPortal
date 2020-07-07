@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { REGISTER_SUCCESS, REGISTER_FAIL, USER_LOADED, AUTH_ERROR, LOGIN_SUCCESS, LOGIN_FAIL, LOGOUT } from '../actionTypes';
+import { REGISTER_SUCCESS, REGISTER_FAIL, USER_LOADED, USER_UPDATED, AUTH_ERROR, LOGIN_SUCCESS, LOGIN_FAIL, LOGOUT } from '../actionTypes';
 import setAuthToken from '../../../utils/setAuthToken';
 
 //Load user
@@ -28,6 +28,32 @@ export const loadUser = () => async dispatch => {
     }
 }
 
+//Update User details
+
+export const updateUser = (user) => async dispatch => {
+    
+    const token = localStorage.token;
+    const body = JSON.stringify(user);
+    const config = {
+        headers: {
+            'Content-Type': 'application/json',
+            'authorization': `Token ${token}`
+        }
+    }
+    try {
+        const res = await axios.put('https://conduit.productionready.io/api/user', body,config);
+        dispatch({
+            type: USER_UPDATED,
+            payload: res.data
+        });
+    }
+    catch (err) {
+        dispatch({
+            type: AUTH_ERROR
+        });
+    }
+}
+
 //Register user
 export const registerUser = user => async dispatch => {
     const config = {
@@ -42,7 +68,7 @@ export const registerUser = user => async dispatch => {
         const res = await axios.post('https://conduit.productionready.io/api/users', body, config);
         dispatch({
             type: REGISTER_SUCCESS,
-            payload: res.data['user'].token
+            payload: res.data
         });
     }
     catch (err) {
@@ -66,6 +92,7 @@ export const login = user => async dispatch => {
             type: LOGIN_SUCCESS,
             payload: res.data
         });
+        
     }
     catch (err) {
         dispatch({

@@ -1,0 +1,31 @@
+@import '../../config_colors.scss';
+
+.profile-settings{
+    display: flex;
+    justify-content: center;
+    vertical-align: middle;
+
+    .url, .profile-username,  .profile-bio, .profile-email, .profile-pswd {
+        width: 30rem;
+        height: 3rem;
+        padding: 0.5rem 0.75rem;
+    }
+    
+    .profile-bio{
+        width: 30rem;
+        height: auto;
+    }
+
+    .update{
+        background-color: $heading-color;
+        float: right;
+        color: white;
+        margin-bottom: 1rem;
+    }
+
+    .logout{
+        background-color: white;
+        border: 1px solid darkred;
+        color:darkred;
+    }
+}
