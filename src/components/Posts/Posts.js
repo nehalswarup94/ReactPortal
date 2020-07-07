@@ -3,7 +3,7 @@ import './Posts.scss';
 import ArticleCard from '../ArticleCard/ArticleCard.js';
 import Tags from '../Tags/Tags';
 import {Link} from 'react-router-dom';
-import {listArticles} from '../../services/actions/Article/articleActions';
+import {listArticles, markFavourite} from '../../services/actions/Article/articleActions';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux'
 
@@ -28,10 +28,17 @@ class Posts extends React.Component {
             });
         }
     }
+
+    changeFav = (slug,e) => {
+        
+            this.props.markFavourite(slug);
+        
+    }
+
     render() {
         const {articles} = this.props;
         let articlesList = articles.articles && articles.articles.map((article,index)=>{
-            return <ArticleCard key = {index} article={article}/>
+            return <ArticleCard key = {index} article={article} changeFav={this.changeFav}/>
         });
         const globalClass = this.state.global ? 'links globalClass' : 'links';
         const localClass = !this.state.global ? 'links localClass' : 'links';
@@ -64,13 +71,14 @@ class Posts extends React.Component {
 }
 
 Posts.propTypes = {
-    listArticles: PropTypes.array.isRequired,
+    listArticles: PropTypes.func.isRequired,
     isAuthenticated: PropTypes.bool.isRequired,
-    articles: PropTypes.array.isRequired
+    articles: PropTypes.array.isRequired,
+    markFavourite: PropTypes.func.isRequired
 }
 
 const mapStateToProps = state => ({
     articles:state.article.articles,
     isAuthenticated: state.auth.isAuthenticated
 });
-export default connect(mapStateToProps,{listArticles})(Posts);
+export default connect(mapStateToProps,{listArticles,markFavourite})(Posts);

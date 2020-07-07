@@ -1,4 +1,4 @@
-import {CREATE_ARTICLE, LIST_ARTICLES} from '../actions/actionTypes';
+import {CREATE_ARTICLE, LIST_ARTICLES, MARK_FAV} from '../actions/actionTypes';
 
 const initialState={
     article:{},
@@ -16,6 +16,11 @@ export default function(state=initialState,action){
             return {
                 ...state,
                 articles:action.payload
+            }
+        case MARK_FAV:
+            return {
+                ...state,
+                articles: state.articles.filter((article)=> action.payload.payload.article.slug === article.slug ? article = action.payload : null)
             }
         default:
             return state

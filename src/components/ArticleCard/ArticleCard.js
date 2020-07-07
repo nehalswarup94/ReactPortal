@@ -3,7 +3,13 @@ import './ArticleCard.scss';
 import { Redirect, Link } from 'react-router-dom';
 
 class ArticleCard extends React.Component{
+
+
+    changeFav = (slug,e) =>{
+        this.props.changeFav(slug);
+    }
     render(){
+        console.log('after click')
         const {article} = this.props;
         const btnClass = article.favorited ? 'btn btn-sm fav-btn' : 'btn btn-sm not-fav-btn';
         return(
@@ -14,7 +20,7 @@ class ArticleCard extends React.Component{
                 style={{height:"1rem", width:"1rem"}}></img>&nbsp;&nbsp;{article.author.username}
                 </span>
                 {/* <Link to='/create'>Delete</Link> */}
-                <button className={btnClass} onClick={this.changeFav}>{article.favoritesCount}</button>
+                <button className={btnClass} onClick={this.changeFav.bind(this,article.slug)}>{article.favoritesCount}</button>
                 </div>
                 <h3>{article.title}</h3>
                 <h2>{article.description}</h2>

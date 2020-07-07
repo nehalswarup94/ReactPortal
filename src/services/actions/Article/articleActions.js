@@ -1,5 +1,6 @@
-import {CREATE_ARTICLE, LIST_ARTICLES} from '../actionTypes';
+import {CREATE_ARTICLE, LIST_ARTICLES, AUTH_ERROR, MARK_FAV} from '../actionTypes';
 import axios from 'axios';
+import setAuthToken from '../../../utils/setAuthToken';
 
 export const createArticle = (newArticle) => async dispatch => {
     const token = localStorage.token;
@@ -44,6 +45,34 @@ export const listArticles = () => async dispatch => {
     catch (err) {
         // dispatch({
         //     type: ARTICLE
+        // })
+    }
+}
+
+//fav article
+export const markFavourite = (slug) => async dispatch => {
+    if (localStorage.token) {
+        setAuthToken(localStorage.token);
+    }
+    const token = localStorage.token;
+    const config = {
+        headers: {
+            'Content-Type': 'application/json',
+             'authorization' : `Token ${token}`
+        }
+    }
+
+    //const body = JSON.stringify(newArticle);
+    try {
+        const res = await axios.post(`https://conduit.productionready.io/api/articles/${slug}/favorite`);
+        dispatch({
+            type: MARK_FAV,
+            payload: res.data
+        });
+    }
+    catch (err) {
+        // dispatch({
+        //     type: AUTH_ERROR
         // })
     }
 }

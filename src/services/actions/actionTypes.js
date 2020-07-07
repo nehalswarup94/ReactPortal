@@ -9,3 +9,4 @@ export const LOGOUT = 'LOGOUT';
 export const CREATE_ARTICLE = 'CREATE_ARTICLE';
 export const LIST_ARTICLES = 'LIST_ARTICLES';
 export const GET_TAGS = 'GET_TAGS';
+export const MARK_FAV = 'MARK_FAV';
