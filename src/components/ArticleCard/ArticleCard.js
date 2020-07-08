@@ -1,12 +1,13 @@
 import React from 'react';
 import './ArticleCard.scss';
 import { Redirect, Link } from 'react-router-dom';
+import Article from '../Article/Article';
 
 class ArticleCard extends React.Component{
 
 
-    changeFav = (slug,e) =>{
-        this.props.changeFav(slug);
+    changeFav = (slug,status,e) =>{
+        this.props.changeFav(slug,status);
     }
     render(){
         console.log('after click')
@@ -17,14 +18,18 @@ class ArticleCard extends React.Component{
                 <div style={{display:"flex"}}>
                 <span style={{flexBasis:"95%"}}>
                 <img src="https://static.productionready.io/images/smiley-cyrus.jpg"
-                style={{height:"1rem", width:"1rem"}}></img>&nbsp;&nbsp;{article.author.username}
+                style={{height:"1rem", width:"1rem",  borderRadius:"2rem"}}></img>&nbsp;&nbsp;{article.author.username}
                 </span>
-                {/* <Link to='/create'>Delete</Link> */}
-                <button className={btnClass} onClick={this.changeFav.bind(this,article.slug)}>{article.favoritesCount}</button>
+                
+                <button className={btnClass} 
+                onClick={!article.favorited ? this.changeFav.bind(this,article.slug,'mark_fav') 
+                : this.changeFav.bind(this,article.slug,'mark_unfav')}>
+                {article.favoritesCount}</button>
+   
                 </div>
-                <h3>{article.title}</h3>
-                <h2>{article.description}</h2>
-                <Link to='/article/nehal' className='read-more'>Read More..</Link>
+                <h3><Link to={`/article/${article.slug}`} className='article-title'>{article.title}</Link></h3>
+                <p className='article-desc'>{article.description}</p>
+                <Link to={`/article/${article.slug}`} className='read-more'>Read More..</Link>
                 
             </div>
         )

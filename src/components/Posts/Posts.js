@@ -3,7 +3,7 @@ import './Posts.scss';
 import ArticleCard from '../ArticleCard/ArticleCard.js';
 import Tags from '../Tags/Tags';
 import {Link} from 'react-router-dom';
-import {listArticles, markFavourite} from '../../services/actions/Article/articleActions';
+import {listArticles, markFavourite, markUnFavourite} from '../../services/actions/Article/articleActions';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux'
 
@@ -29,15 +29,18 @@ class Posts extends React.Component {
         }
     }
 
-    changeFav = (slug,e) => {
-        
-            this.props.markFavourite(slug);
-        
+    changeFav = (slug,status,e) => {
+        if(status === 'mark_fav')
+            this.props.markFavourite(slug); 
+        else{
+            this.props.markUnFavourite(slug)
+        }     
     }
 
     render() {
+        console.log(this.props.articles);
         const {articles} = this.props;
-        let articlesList = articles.articles && articles.articles.map((article,index)=>{
+        let articlesList = articles && articles.map((article,index)=>{
             return <ArticleCard key = {index} article={article} changeFav={this.changeFav}/>
         });
         const globalClass = this.state.global ? 'links globalClass' : 'links';
@@ -74,11 +77,12 @@ Posts.propTypes = {
     listArticles: PropTypes.func.isRequired,
     isAuthenticated: PropTypes.bool.isRequired,
     articles: PropTypes.array.isRequired,
-    markFavourite: PropTypes.func.isRequired
+    markFavourite: PropTypes.func.isRequired,
+    markUnFavourite:  PropTypes.func.isRequired
 }
 
 const mapStateToProps = state => ({
     articles:state.article.articles,
     isAuthenticated: state.auth.isAuthenticated
 });
-export default connect(mapStateToProps,{listArticles,markFavourite})(Posts);
+export default connect(mapStateToProps,{listArticles,markFavourite, markUnFavourite})(Posts);

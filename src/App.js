@@ -36,7 +36,7 @@ class App extends React.Component {
               <Switch>
                 <Route exact path='/login' component={Login} />
                 <Route exact path='/register' component={Register} />
-                <Route exact path='/article/:name' component={Article} />
+                <Route exact path='/article/:slug' component={Article} />
                 <Route exact path='/createarticle' component={CreateArticle} />
                 <Route exact path='/editarticle' component={EditArticle} />
                 <Route exact path='/profilesettings' component={ProfileSettings} />

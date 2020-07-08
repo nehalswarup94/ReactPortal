@@ -31,7 +31,7 @@ class CreateArticle extends React.Component{
             }
         };
         this.props.createArticle(newArticle);
-        this.props.history.push('/');
+        this.props.history.push('/article/default');
     }
 
     render(){
