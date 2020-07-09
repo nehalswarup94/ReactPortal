@@ -41,7 +41,7 @@ class Posts extends React.Component {
     render() {
         const {articles} = this.props;
         let articlesList = articles && articles.map((article,index)=>{
-            return <ArticleCard key = {index} article={article} changeFav={this.changeFav}/>
+            return <ArticleCard key = {index} article={article} changeFav={this.changeFav} isAuthenticated = {this.props.isAuthenticated}/>
         });
         const globalClass = this.state.global ? 'links globalClass' : 'links';
         const localClass = !this.state.global ? 'links localClass' : 'links';

@@ -1,7 +1,6 @@
 import {CREATE_ARTICLE, LIST_ARTICLES, GET_ARTICLE, MARK_FAV, MARK_UNFAV, FOLLOW_AUTHOR, DEL_ARTICLE, EDIT_ARTICLE, UNFOLLOW_AUTHOR} from '../actionTypes';
 import axios from 'axios';
 import setAuthToken from '../../../utils/setAuthToken';
-import reducers from '../../reducers';
 
 
 //create a new article

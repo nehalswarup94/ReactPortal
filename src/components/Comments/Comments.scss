@@ -1,0 +1,23 @@
+@import '../../config_colors.scss';
+
+.comment-area{
+    width:30rem;
+
+    .comment {
+        padding: 0.5rem;
+    }
+
+
+    .comment-footer{
+        background-color: #f3f3f3;
+        padding: 0.5rem 0.5rem;
+
+       
+        .btn{
+            float: right;
+            background-color: $heading-color;
+            color:white;
+            font-weight: bold;
+        }
+    }
+}

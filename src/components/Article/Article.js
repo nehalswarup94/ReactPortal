@@ -1,6 +1,6 @@
 import React from 'react';
 import './Article.scss';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { getArticle, markFavourite, markUnFavourite,  deleteArticle } from '../../services/actions/Article/articleActions';
 import {followAuthor, unFollowAuthor} from '../../services/actions/Profile/profileActions';
 import Comments from '../Comments/Comments.js';
@@ -71,12 +71,14 @@ class Article extends React.Component {
     }
 
     render() {
-        console.log(this.state.followed);
         const { article,user } = this.props;
         const followClass = this.state.followed ? 'btn btn-follow' : 'btn btn-unfollow';
         const favClass = article.article && article.article.favorited ? 'btn btn-fav' : 'btn btn-unfav';
        
         return (
+            !this.props.isAuthenticated ?
+            	<Redirect to='/'/>
+            :
             <>
                 <div className='article-heading-div'>
                     <h1 className='article-name'>{article.article && article.article.title}</h1><br/>
@@ -141,6 +143,7 @@ Article.propsTypes = {
 
 const mapStateToProps = state => ({
     article: state.article.article,
-    user: state.auth.user
+    user: state.auth.user,
+    isAuthenticated: state.auth.isAuthenticated
 })
 export default connect(mapStateToProps, { getArticle,markFavourite,markUnFavourite, followAuthor, unFollowAuthor, deleteArticle })(Article);

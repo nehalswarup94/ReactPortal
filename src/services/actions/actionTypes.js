@@ -17,3 +17,7 @@ export const UNFOLLOW_AUTHOR = 'UNFOLLOW_AUTHOR';
 export const GET_PROFILE = 'GET_PROFILE';
 export const DEL_ARTICLE = 'DEL_ARTICLE';
 export const EDIT_ARTICLE = 'EDIT_ARTICLE';
+export const CREATE_COMMENT = 'CREATE_COMMENT';
+export const EDIT_COMMENT = 'EDIT_COMMENT';
+export const DELETE_COMMENT = 'DELETE_COMMENT';
+export const LIST_COMMENTS = 'LIST_COMMENTS';

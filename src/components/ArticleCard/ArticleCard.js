@@ -1,14 +1,14 @@
 import React from 'react';
 import './ArticleCard.scss';
-import { Redirect, Link } from 'react-router-dom';
-import Article from '../Article/Article';
+import { Link } from 'react-router-dom';
 
 class ArticleCard extends React.Component{
 
 
     changeFav = (slug,status,e) =>{
-        this.props.changeFav(slug,status);
+            this.props.changeFav(slug,status);
     }
+
     render(){
         const {article} = this.props;
         const btnClass = article.favorited ? 'btn btn-sm fav-btn' : 'btn btn-sm not-fav-btn';
@@ -21,10 +21,12 @@ class ArticleCard extends React.Component{
                 <Link to = {`/profile/${article.author.username}`} className='author-name'>{article.author.username}</Link>
                 </span>
                 
-                <button className={btnClass} 
+                {this.props.isAuthenticated ? (<button className={btnClass} 
                 onClick={!article.favorited ? this.changeFav.bind(this,article.slug,'mark_fav') 
                 : this.changeFav.bind(this,article.slug,'mark_unfav')}>
-                {article.favoritesCount}</button>
+                {article.favoritesCount}</button>) :
+                <button className={btnClass} disabled>{article.favoritesCount}</button>
+                }
    
                 </div>
                 <h3><Link to={`/article/${article.slug}`} className='article-title'>{article.title}</Link></h3>
