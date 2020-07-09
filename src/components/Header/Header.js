@@ -24,7 +24,7 @@ class Header extends React.Component {
                                 <Link to="/" className='option-links'>Home</Link>
                                 <Link to="/createarticle" className='option-links'>New Article</Link>
                                 <Link to="/profilesettings" className='option-links'>Settings</Link>
-                                {user&&<Link to="/profile" className='option-links'>{user.user.username}</Link>}
+                                {user&&<Link to={`/profile/${user.user.username}`} className='option-links'>{user.user.username}</Link>}
                             </div>
                         </div>
         return (

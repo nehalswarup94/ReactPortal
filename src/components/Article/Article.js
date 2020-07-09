@@ -1,7 +1,8 @@
 import React from 'react';
 import './Article.scss';
 import { Link } from 'react-router-dom';
-import { getArticle, markFavourite, markUnFavourite, followAuthor, unFollowAuthor } from '../../services/actions/Article/articleActions';
+import { getArticle, markFavourite, markUnFavourite,  deleteArticle } from '../../services/actions/Article/articleActions';
+import {followAuthor, unFollowAuthor} from '../../services/actions/Profile/profileActions';
 import Comments from '../Comments/Comments.js';
 import AddComments from '../Comments/AddComments.js';
 import store from '../../store';
@@ -10,10 +11,24 @@ import PropTypes from 'prop-types';
 
 class Article extends React.Component {
 
+    state = {
+        followed: this.props.article.article ? this.props.article.article.author.following : false,
+        btnClicked:false
+    }
+
     componentDidMount() {
         if(this.props.match.params.slug !== 'default'){
             this.props.getArticle(this.props.match.params.slug);
         }
+    }
+
+    static getDerivedStateFromProps(props,state){
+        if(props.article.article && props.article.article.author.following !== state.followed && state.btnClicked===false){
+            return {
+                followed: props.article.article.author.following
+            }
+        }
+        return null;
     }
 
     changeFav = (slug,status,e) => {
@@ -26,6 +41,10 @@ class Article extends React.Component {
     }
 
     changeFollow = (username,status,e) => {
+        this.setState({
+            btnClicked:true,
+            followed:!this.state.followed
+        });
         if(status === 'follow'){
             this.props.followAuthor(username)
         }
@@ -33,9 +52,28 @@ class Article extends React.Component {
             this.props.unFollowAuthor(username);
         }
     }
+
+    deleteArticle = (slug,e) => {
+        this.props.deleteArticle(slug);
+        this.props.history.push('/');
+    }
+
+    editArticle = (title,body,description,slug,e) => {
+        this.props.history.push({
+            pathname: '/createarticle',
+            state: {
+                title,
+                body,
+                description,
+                slug
+            }
+        })
+    }
+
     render() {
+        console.log(this.state.followed);
         const { article,user } = this.props;
-        const followClass = article.article && article.article.author.following ? 'btn btn-follow' : 'btn btn-unfollow';
+        const followClass = this.state.followed ? 'btn btn-follow' : 'btn btn-unfollow';
         const favClass = article.article && article.article.favorited ? 'btn btn-fav' : 'btn btn-unfav';
        
         return (
@@ -48,12 +86,12 @@ class Article extends React.Component {
                         <p>{article.article && article.article.author.username}</p>
 
                     {/* Follow Buttons */}
-                        {article.article && user.user.username !== article.article.author.username && article.article.author.following ?
-                        <button onClick={this.changeFollow.bind(this,article.article.author.username,'follow')} className={followClass}>UnFollow {article.article && article.article.author.username}</button>
+                        {article.article && user.user.username !== article.article.author.username && this.state.followed ?
+                        <button onClick={this.changeFollow.bind(this,article.article.author.username,'unfollow')} className={followClass}>UnFollow {article.article && article.article.author.username}</button>
                         :
                         article.article && 
                         user.user.username !== article.article.author.username && 
-                        <button onClick={this.changeFollow.bind(this,article.article.author.username,'unfollow')} className={followClass}>Follow {article.article && article.article.author.username}</button>}
+                        <button onClick={this.changeFollow.bind(this,article.article.author.username,'follow')} className={followClass}>Follow {article.article && article.article.author.username}</button>}
                         
                     {/* Favourite Buttons */}
                         {article.article && user.user.username !== article.article.author.username && article.article.favorited ?
@@ -67,8 +105,10 @@ class Article extends React.Component {
                     {/* Edit Delete buttons */}
                         {article.article && user.user.username === article.article.author.username &&
                         <>
-                        <button className='btn edit-btn' onClick={this.editArticle}>Edit Article</button>
-                        <button className='btn del-btn' onClick={this.editArticle}>Delete Article</button>
+                        <button className='btn edit-btn' 
+                        onClick={this.editArticle.bind(this,article.article.title,article.article.body,article.article.description,article.article.slug)}>
+                        Edit Article</button>
+                        <button className='btn del-btn' onClick={this.deleteArticle.bind(this,article.article.slug)}>Delete Article</button>
                         </>}
                         
                     </div>
@@ -103,4 +143,4 @@ const mapStateToProps = state => ({
     article: state.article.article,
     user: state.auth.user
 })
-export default connect(mapStateToProps, { getArticle,markFavourite,markUnFavourite, followAuthor, unFollowAuthor })(Article);
+export default connect(mapStateToProps, { getArticle,markFavourite,markUnFavourite, followAuthor, unFollowAuthor, deleteArticle })(Article);

@@ -1,4 +1,4 @@
-import {CREATE_ARTICLE, LIST_ARTICLES, GET_ARTICLE, MARK_FAV, MARK_UNFAV, FOLLOW_AUTHOR, UNFOLLOW_AUTHOR} from '../actions/actionTypes';
+import {CREATE_ARTICLE, LIST_ARTICLES, GET_ARTICLE, MARK_FAV, MARK_UNFAV, DEL_ARTICLE, EDIT_ARTICLE} from '../actions/actionTypes';
 
 const initialState={
     article:{},
@@ -25,9 +25,15 @@ export default function(state=initialState,action){
                 article:action.payload,
                 articles: state.articles.map((article)=> article.slug === action.payload.article.slug ? article = action.payload.article : article)
             }
-        case FOLLOW_AUTHOR:
+        case DEL_ARTICLE:
+            return{
+                ...state,
+                articles: state.articles.filter((article)=> article.slug !== action.payload)
+            }
+        case EDIT_ARTICLE:
             return {
-                ...state
+                ...state,
+                articles: state.article.map((article)=> article.slug === action.payload.article.slug ? article = action.payload.article.article : article)
             }
         default:
             return state

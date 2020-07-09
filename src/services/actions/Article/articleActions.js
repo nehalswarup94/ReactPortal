@@ -1,6 +1,7 @@
-import {CREATE_ARTICLE, LIST_ARTICLES, GET_ARTICLE, MARK_FAV, MARK_UNFAV, FOLLOW_AUTHOR, UNFOLLOW_AUTHOR} from '../actionTypes';
+import {CREATE_ARTICLE, LIST_ARTICLES, GET_ARTICLE, MARK_FAV, MARK_UNFAV, FOLLOW_AUTHOR, DEL_ARTICLE, EDIT_ARTICLE, UNFOLLOW_AUTHOR} from '../actionTypes';
 import axios from 'axios';
 import setAuthToken from '../../../utils/setAuthToken';
+import reducers from '../../reducers';
 
 
 //create a new article
@@ -27,6 +28,57 @@ export const createArticle = (newArticle) => async dispatch => {
         // })
     }
 }
+
+//Delete article
+export const deleteArticle = (slug) => async dispatch => {
+    if (localStorage.token) {
+        setAuthToken(localStorage.token);
+    }
+
+    try {
+        const res = await axios.delete(`https://conduit.productionready.io/api/articles/${slug}`);
+        dispatch({
+            type: DEL_ARTICLE,
+            payload: slug
+        });
+    }
+    catch (err) {
+        // dispatch({
+        //     type: ARTICLE
+        // })
+    }
+}
+
+//Edit article
+export const editArticle = (slug,newArticle) => async dispatch => {
+    // if (localStorage.token) {
+    //     setAuthToken(localStorage.token);
+    // }
+    const token = localStorage.token;
+    const config = {
+        headers: {
+            'Content-Type': 'application/json',
+             'authorization' : `Token ${token}`
+        }
+    }
+
+    const body = JSON.stringify(newArticle);
+
+    try {
+        const res = await axios.put(`https://conduit.productionready.io/api/articles/${slug}`,body,config);
+        dispatch({
+            type: EDIT_ARTICLE,
+            payload: res.data
+        });
+    }
+    catch (err) {
+        // dispatch({
+        //     type: ARTICLE
+        // })
+    }
+}
+
+
 
 //Get a single article
 export const getArticle = (slug) => async dispatch => {
@@ -102,13 +154,6 @@ export const markUnFavourite = (slug) => async dispatch => {
     if (localStorage.token) {
         setAuthToken(localStorage.token);
     }
-    const token = localStorage.token;
-    const config = {
-        headers: {
-            'Content-Type': 'application/json',
-             'authorization' : `Token ${token}`
-        }
-    }
     try {
         const res = await axios.delete(`https://conduit.productionready.io/api/articles/${slug}/favorite`);
         dispatch({
@@ -126,13 +171,7 @@ export const followAuthor = (username) => async dispatch => {
     if (localStorage.token) {
         setAuthToken(localStorage.token);
     }
-    const token = localStorage.token;
-    const config = {
-        headers: {
-            'Content-Type': 'application/json',
-             'authorization' : `Token ${token}`
-        }
-    }
+    
     try {
         const res = await axios.post(`https://conduit.productionready.io/api/profiles/${username}/follow`);
         dispatch({
@@ -150,13 +189,7 @@ export const unFollowAuthor= (username) => async dispatch => {
     if (localStorage.token) {
         setAuthToken(localStorage.token);
     }
-    const token = localStorage.token;
-    const config = {
-        headers: {
-            'Content-Type': 'application/json',
-             'authorization' : `Token ${token}`
-        }
-    }
+    
     try {
         const res = await axios.delete(`https://conduit.productionready.io/api/profiles/${username}/follow`);
         dispatch({

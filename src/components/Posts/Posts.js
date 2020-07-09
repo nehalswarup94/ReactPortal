@@ -38,7 +38,6 @@ class Posts extends React.Component {
     }
 
     render() {
-        console.log(this.props.articles);
         const {articles} = this.props;
         let articlesList = articles && articles.map((article,index)=>{
             return <ArticleCard key = {index} article={article} changeFav={this.changeFav}/>

@@ -40,7 +40,7 @@ class App extends React.Component {
                 <Route exact path='/createarticle' component={CreateArticle} />
                 <Route exact path='/editarticle' component={EditArticle} />
                 <Route exact path='/profilesettings' component={ProfileSettings} />
-                <Route exact path='/profile' component={Profile} />
+                <Route exact path='/profile/:username' component={Profile} />
               </Switch>
             </>
           </div>

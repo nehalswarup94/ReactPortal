@@ -71,7 +71,6 @@ class ProfileSettings extends React.Component {
         this.props.logout();
     }
     render() {
-        console.log(this.props.user);
         return (
             !this.props.isAuthenticated ? 
             <Redirect to='/login'/> : 

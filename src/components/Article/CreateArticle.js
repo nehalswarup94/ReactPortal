@@ -1,6 +1,6 @@
 import React from 'react';
 import './createArticle.scss';
-import {createArticle} from '../../services/actions/Article/articleActions';
+import {createArticle, editArticle} from '../../services/actions/Article/articleActions';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
@@ -8,9 +8,10 @@ class CreateArticle extends React.Component{
     constructor(props){
         super(props);
         this.state={
-            title:'',
-            description:'',
-            body:'',
+            title: this.props.location.state ? this.props.location.state.title : '',
+            description: this.props.location.state ? this.props.location.state.description : '',
+            body:this.props.location.state? this.props.location.state.body :'',
+            slug:this.props.location.state? this.props.location.state.slug :'',
             tagList:[]
         }
     }
@@ -30,8 +31,15 @@ class CreateArticle extends React.Component{
             tags
             }
         };
-        this.props.createArticle(newArticle);
-        this.props.history.push('/article/default');
+        if(this.props.location.state){
+            this.props.editArticle(this.state.slug,newArticle);
+        this.props.history.push(`/article/${this.state.slug}`);
+        }
+        else{
+            this.props.createArticle(newArticle);
+       
+            this.props.history.push('/article/default');
+        }
     }
 
     render(){
@@ -50,7 +58,8 @@ class CreateArticle extends React.Component{
 }
 
 CreateArticle.propTypes = {
-    createArticle:PropTypes.func.isRequired
+    createArticle:PropTypes.func.isRequired,
+    editArticle:PropTypes.func.isRequired
 }
 
-export default connect(null,{createArticle})(CreateArticle);
+export default connect(null,{createArticle, editArticle})(CreateArticle);

@@ -10,7 +10,6 @@ class ArticleCard extends React.Component{
         this.props.changeFav(slug,status);
     }
     render(){
-        console.log('after click')
         const {article} = this.props;
         const btnClass = article.favorited ? 'btn btn-sm fav-btn' : 'btn btn-sm not-fav-btn';
         return(
@@ -18,7 +17,8 @@ class ArticleCard extends React.Component{
                 <div style={{display:"flex"}}>
                 <span style={{flexBasis:"95%"}}>
                 <img src="https://static.productionready.io/images/smiley-cyrus.jpg"
-                style={{height:"1rem", width:"1rem",  borderRadius:"2rem"}}></img>&nbsp;&nbsp;{article.author.username}
+                style={{height:"1rem", width:"1rem",  borderRadius:"2rem"}}></img>&nbsp;&nbsp;
+                <Link to = {`/profile/${article.author.username}`} className='author-name'>{article.author.username}</Link>
                 </span>
                 
                 <button className={btnClass} 

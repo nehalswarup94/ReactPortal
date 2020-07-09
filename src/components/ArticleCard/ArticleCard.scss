@@ -4,9 +4,20 @@
     margin-top: 1rem;
     padding:1rem 1rem;
     display: flex;
+
+    .author-name{
+        color: $heading-color;
+        text-decoration: none;
+        font-size: 1.25rem;
+        
+        &:hover{
+            text-decoration: underline;
+        }
+    }
     
     .fav-btn{
         background-color: $heading-color;
+        width: 2.5rem;
     }
 
     .not-fav-btn{

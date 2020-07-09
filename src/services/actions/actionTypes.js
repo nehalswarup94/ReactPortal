@@ -14,3 +14,6 @@ export const MARK_FAV = 'MARK_FAV';
 export const MARK_UNFAV = 'MARK_UNFAV';
 export const FOLLOW_AUTHOR = 'FOLLOW_AUTHOR';
 export const UNFOLLOW_AUTHOR = 'UNFOLLOW_AUTHOR';
+export const GET_PROFILE = 'GET_PROFILE';
+export const DEL_ARTICLE = 'DEL_ARTICLE';
+export const EDIT_ARTICLE = 'EDIT_ARTICLE';
