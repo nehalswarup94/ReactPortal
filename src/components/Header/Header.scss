@@ -10,6 +10,11 @@
 
     .portal-link{
         flex-basis: 70%;
+
+        .main-link{
+            color:$heading_color;
+            text-decoration: none;        
+        }
     }
 
     .options{

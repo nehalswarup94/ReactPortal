@@ -11,7 +11,7 @@ class Header extends React.Component {
     render() {
         const { isAuthenticated, loading, user } = this.props.auth;
         const guestLinks = <div className='portal-header'>
-                                <div className='portal-link'>Portal</div>
+                                <div className='portal-link'><Link to="/" className='main-link'>Portal</Link></div>
                                 <div className='options'>
                                     <Link to="/" className='option-links'>Posts</Link>
                                     <Link to="/login" className='option-links'>SignIn</Link>
@@ -19,7 +19,7 @@ class Header extends React.Component {
                                 </div>
                             </div>
         const authLinks = <div className='portal-header'>
-                            <div className='portal-link'>Portal</div>
+                            <div className='portal-link'><Link to="/" className='main-link'>Portal</Link></div>
                             <div className='options'>
                                 <Link to="/" className='option-links'>Home</Link>
                                 <Link to="/createarticle" className='option-links'>New Article</Link>

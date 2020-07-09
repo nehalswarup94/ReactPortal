@@ -3,7 +3,7 @@ import './Posts.scss';
 import ArticleCard from '../ArticleCard/ArticleCard.js';
 import Tags from '../Tags/Tags';
 import {Link} from 'react-router-dom';
-import {listArticles, markFavourite, markUnFavourite} from '../../services/actions/Article/articleActions';
+import {listArticles, markFavourite, markUnFavourite, listMyArticles} from '../../services/actions/Article/articleActions';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux'
 
@@ -23,6 +23,7 @@ class Posts extends React.Component {
             this.props.listArticles();
         }
         else{
+            this.props.listMyArticles();
             this.setState({
                 global:false
             });
@@ -59,8 +60,7 @@ class Posts extends React.Component {
                                 <li className={globalClass} onClick={this.fetchArticles.bind(this,'global')}>Global Feed</li>
                             </ul>
                             <hr style={{marginTop:"-1px"}}></hr>
-                            {this.state.global &&
-                            articlesList}
+                            {articlesList}
                         </div>
                         <div className='col-xs-12 col-sm-2'>
                             <Tags/>
@@ -84,4 +84,4 @@ const mapStateToProps = state => ({
     articles:state.article.articles,
     isAuthenticated: state.auth.isAuthenticated
 });
-export default connect(mapStateToProps,{listArticles,markFavourite, markUnFavourite})(Posts);
+export default connect(mapStateToProps,{listArticles, listMyArticles ,markFavourite, markUnFavourite})(Posts);

@@ -100,6 +100,26 @@ export const getArticle = (slug) => async dispatch => {
     }
 }
 
+//Getmy feed articles
+export const listMyArticles = () => async dispatch => {
+    if (localStorage.token) {
+        setAuthToken(localStorage.token);
+    }
+
+    //const body = JSON.stringify(newArticle);
+    try {
+        const res = await axios.get('https://conduit.productionready.io/api/articles/feed');
+        dispatch({
+            type: LIST_ARTICLES,
+            payload: res.data
+        });
+    }
+    catch (err) {
+        // dispatch({
+        //     type: ARTICLE
+        // })
+    }
+}
 
 //Get all articles array
 export const listArticles = () => async dispatch => {
