@@ -4,8 +4,7 @@ import { Link, Redirect } from 'react-router-dom';
 import { getArticle, markFavourite, markUnFavourite,  deleteArticle } from '../../services/actions/Article/articleActions';
 import {followAuthor, unFollowAuthor} from '../../services/actions/Profile/profileActions';
 import Comments from '../Comments/Comments.js';
-import AddComments from '../Comments/AddComments.js';
-import store from '../../store';
+import CommentsList from '../Comments/CommentsList.js';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
@@ -121,9 +120,14 @@ class Article extends React.Component {
                     <br /><br />
                     <hr />
                     <div className='container comment-section'>
-                        <p><Link className='redirect-link' to='/login'>Sign In</Link> or <Link className='redirect-link' to='/register'>Sign Up</Link> to add comments.</p>
-                        <Comments />
-                        <AddComments />
+                        {/* <p><Link className='redirect-link' to='/login'>Sign In</Link> or <Link className='redirect-link' to='/register'>Sign Up</Link> to add comments.</p> */}
+                        {article.article && article.article.slug && 
+                        <>
+                        <Comments slug={article.article && article.article.slug} />
+                        <br/>
+                        <CommentsList slug={article.article && article.article.slug}/>
+                        </>
+                        }
                     </div>
                 </div>
             </>

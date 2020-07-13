@@ -1,5 +1,9 @@
 import React from 'react';
 import './Comments.scss';
+import {createComment} from '../../services/actions/Comments/commentActions';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+
 class Comments extends React.Component{
     
     state = {
@@ -17,8 +21,13 @@ class Comments extends React.Component{
                 body: this.state.comment
             }
         }
+        this.setState({
+            comment:''
+        })
+        this.props.createComment(this.props.slug,comment);
     }
     render(){
+        const {slug} = this.props;
         return(
             <div className='card comment-area' >
                 <textarea className='comment' 
@@ -33,4 +42,8 @@ class Comments extends React.Component{
     }
 }
 
-export default Comments;
+Comments.propsTypes = {
+    createComment: PropTypes.func.isRequired
+}
+
+export default connect(null,{createComment})(Comments);

@@ -1,0 +1,31 @@
+@import '../../config_colors.scss';
+
+.comment-area{
+    width:30rem;
+
+    .commentText {
+        padding: 0.5rem;
+        height: 5rem;
+    }
+
+
+    .comment-list-footer{
+        background-color: #f3f3f3;
+        padding: 0.3rem 0.3rem;
+        display: flex;
+
+        .commentAuthor{
+            flex-basis: 90%;
+            display: inline-flex;
+            vertical-align: middle;
+        }
+       
+        .del-btn{
+            float: right;
+            background-color: red;
+            color:white;
+            font-weight: bold;
+            justify-content: flex-end;
+        }
+    }
+}
