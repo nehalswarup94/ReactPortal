@@ -2,10 +2,18 @@
 
 .profile-header{
         background-color: #f3f3f3;
-        display: flex;
-        justify-content: center;
-        vertical-align: middle;
-        align-items: center;
-        flex-direction: column;
-        height: 15rem;
+        padding: 3rem 3rem;
+
+        .profile-header-content{
+            display: flex;
+            justify-content: center;
+            vertical-align: middle;
+            align-items: center;
+            flex-direction: column;
+
+        }
+        .button{
+            display: flex;
+            flex-direction: row-reverse;
+        }
     }
