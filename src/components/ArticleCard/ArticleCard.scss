@@ -17,14 +17,15 @@
     
     .fav-btn{
         background-color: $heading-color;
-        width: 2.5rem;
+        width: 3rem;
+        color: white;
     }
 
     .not-fav-btn{
         border: 1px solid $heading-color;
         background-color: white;
         color: $heading-color;
-        width: 2.5rem;
+        width: 3rem;
     }
     
     .article-title{

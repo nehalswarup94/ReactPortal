@@ -22,8 +22,10 @@ class Header extends React.Component {
                             <div className='portal-link'><Link to="/" className='main-link'>Portal</Link></div>
                             <div className='options'>
                                 <Link to="/" className='option-links'>Home</Link>
-                                <Link to="/createarticle" className='option-links'>New Article</Link>
-                                <Link to="/profilesettings" className='option-links'>Settings</Link>
+                                <Link to="/createarticle" className='option-links'>
+                                <i className="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp;New Article</Link>
+                                <Link to="/profilesettings" className='option-links'>
+                                <i className="fa fa-cog" aria-hidden="true"></i>&nbsp;Settings</Link>
                                 {user&&<Link to={`/profile/${user.user.username}`} className='option-links'>{user.user.username}</Link>}
                             </div>
                         </div>

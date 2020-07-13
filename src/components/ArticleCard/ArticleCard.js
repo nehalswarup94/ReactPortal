@@ -24,6 +24,7 @@ class ArticleCard extends React.Component{
                 {this.props.isAuthenticated ? (<button className={btnClass} 
                 onClick={!article.favorited ? this.changeFav.bind(this,article.slug,'mark_fav') 
                 : this.changeFav.bind(this,article.slug,'mark_unfav')}>
+                    <i className="fa fa-heart" aria-hidden="true"></i>&nbsp;
                 {article.favoritesCount}</button>) :
                 <button className={btnClass} disabled>{article.favoritesCount}</button>
                 }

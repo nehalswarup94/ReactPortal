@@ -19,6 +19,9 @@ class Article extends React.Component {
         if(this.props.match.params.slug !== 'default'){
             this.props.getArticle(this.props.match.params.slug);
         }
+        // else{
+        //     this.props.getArticle(this.props.article.article.slug)
+        // }
     }
 
     static getDerivedStateFromProps(props,state){
@@ -88,19 +91,23 @@ class Article extends React.Component {
 
                     {/* Follow Buttons */}
                         {article.article && user.user.username !== article.article.author.username && this.state.followed ?
-                        <button onClick={this.changeFollow.bind(this,article.article.author.username,'unfollow')} className={followClass}>UnFollow {article.article && article.article.author.username}</button>
+                        <button onClick={this.changeFollow.bind(this,article.article.author.username,'unfollow')} className={followClass}>
+                        <i className="fa fa-plus" aria-hidden="true"></i>&nbsp;UnFollow {article.article && article.article.author.username}</button>
                         :
                         article.article && 
                         user.user.username !== article.article.author.username && 
-                        <button onClick={this.changeFollow.bind(this,article.article.author.username,'follow')} className={followClass}>Follow {article.article && article.article.author.username}</button>}
+                        <button onClick={this.changeFollow.bind(this,article.article.author.username,'follow')} className={followClass}>
+                        <i className="fa fa-plus" aria-hidden="true"></i>&nbsp;Follow {article.article && article.article.author.username}</button>}
                         
                     {/* Favourite Buttons */}
                         {article.article && user.user.username !== article.article.author.username && article.article.favorited ?
-                        <button className={favClass} onClick={this.changeFav.bind(this,article.article.slug,'mark-unfav')}>UnFavourite Article ({article.article && article.article.favoritesCount})</button>
+                        <button className={favClass} onClick={this.changeFav.bind(this,article.article.slug,'mark-unfav')}>
+                        <i className="fa fa-heart" aria-hidden="true"></i>&nbsp;UnFavourite Article ({article.article && article.article.favoritesCount})</button>
                         :
                         article.article 
                         && user.user.username !== article.article.author.username 
-                        && <button className={favClass} onClick={this.changeFav.bind(this,article.article.slug,'mark-fav')}>Favourite Article ({article.article && article.article.favoritesCount})</button>}
+                        && <button className={favClass} onClick={this.changeFav.bind(this,article.article.slug,'mark-fav')}>
+                        <i className="fa fa-heart" aria-hidden="true"></i>&nbsp;Favourite Article ({article.article && article.article.favoritesCount})</button>}
                         
 
                     {/* Edit Delete buttons */}
@@ -123,9 +130,9 @@ class Article extends React.Component {
                         {/* <p><Link className='redirect-link' to='/login'>Sign In</Link> or <Link className='redirect-link' to='/register'>Sign Up</Link> to add comments.</p> */}
                         {article.article && article.article.slug && 
                         <>
-                        <Comments slug={article.article && article.article.slug} />
+                        <Comments slug={this.props.article.article && this.props.article.article.slug} />
                         <br/>
-                        <CommentsList slug={article.article && article.article.slug}/>
+                        <CommentsList slug={this.props.article.article && this.props.article.article.slug}/>
                         </>
                         }
                     </div>
