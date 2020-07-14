@@ -4,6 +4,7 @@ import ArticleCard from '../ArticleCard/ArticleCard.js';
 import Tags from '../Tags/Tags';
 import {Link} from 'react-router-dom';
 import {listArticles, markFavourite, markUnFavourite, listMyArticles} from '../../services/actions/Article/articleActions';
+import {unSetTag} from '../../services/actions/Tags/tagActions';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux'
 
@@ -28,6 +29,7 @@ class Posts extends React.Component {
                 global:false
             });
         }
+        this.props.unSetTag();
     }
 
     changeFav = (slug,status,e) => {
@@ -43,8 +45,9 @@ class Posts extends React.Component {
         let articlesList = articles && articles.map((article,index)=>{
             return <ArticleCard key = {index} article={article} changeFav={this.changeFav} isAuthenticated = {this.props.isAuthenticated}/>
         });
-        const globalClass = this.state.global ? 'links globalClass' : 'links';
-        const localClass = !this.state.global ? 'links localClass' : 'links';
+        const globalClass = this.state.global && this.props.tag==='' ? 'links globalClass' : 'links';
+        const localClass = !this.state.global && this.props.tag===''? 'links localClass' : 'links';
+        const tagClass = this.props.tag!=='' ? 'links tagClass' : 'links';
         return (
             <>
                 <div className='post-heading-div'>
@@ -56,8 +59,11 @@ class Posts extends React.Component {
                     <div className='row'>
                         <div className='col-xs-12 col-sm-10'>
                             <ul className='custom-nav-links'>
-                                {this.props.isAuthenticated===true && <li className={localClass} onClick={this.fetchArticles.bind(this,'myFeed')}>Your Feed</li>}
+                                {this.props.isAuthenticated===true && 
+                                <li className={localClass} onClick={this.fetchArticles.bind(this,'myFeed')}>Your Feed</li>}
                                 <li className={globalClass} onClick={this.fetchArticles.bind(this,'global')}>Global Feed</li>
+                                {this.props.tag!=='' && 
+                                <li className={tagClass}>{this.props.tag}</li>}
                             </ul>
                             <hr style={{marginTop:"-1px"}}></hr>
                             {articlesList}
@@ -77,11 +83,13 @@ Posts.propTypes = {
     isAuthenticated: PropTypes.bool.isRequired,
     articles: PropTypes.array.isRequired,
     markFavourite: PropTypes.func.isRequired,
-    markUnFavourite:  PropTypes.func.isRequired
+    markUnFavourite: PropTypes.func.isRequired,
+    unSetTag: PropTypes.func.isRequired
 }
 
 const mapStateToProps = state => ({
     articles:state.article.articles,
-    isAuthenticated: state.auth.isAuthenticated
+    isAuthenticated: state.auth.isAuthenticated,
+    tag: state.tag.tag
 });
-export default connect(mapStateToProps,{listArticles, listMyArticles ,markFavourite, markUnFavourite})(Posts);
+export default connect(mapStateToProps,{listArticles, listMyArticles ,markFavourite, markUnFavourite, unSetTag})(Posts);

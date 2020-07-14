@@ -1,7 +1,8 @@
-import {GET_TAGS} from '../actions/actionTypes';
+import {GET_TAGS, SET_TAG, UNSET_TAG} from '../actions/actionTypes';
 
 const initialState={
-    tags:[]
+    tags:[],
+    tag:''
 }
 
 export default function (state = initialState, action) {
@@ -10,6 +11,17 @@ export default function (state = initialState, action) {
             return{
                 ...state,
                 tags:action.payload
+            }
+        case SET_TAG:
+            return{
+                ...state,
+                tag:action.payload
+            }
+
+        case UNSET_TAG:
+            return{
+                ...state,
+                tag: ''
             }
         default:
             return state

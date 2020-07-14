@@ -191,6 +191,30 @@ export const listFavoritedArticles = (author) => async dispatch => {
     }
 }
 
+export const listArticlesByTags = (tag) => async dispatch => {
+    const token = localStorage.token;
+    const config = {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }
+
+    //const body = JSON.stringify(newArticle);
+    try {
+        const res = await axios.get(`https://conduit.productionready.io/api/articles?tag=${tag}`, config);
+        dispatch({
+            type: LIST_ARTICLES,
+            payload: res.data
+        });
+    }
+    catch (err) {
+        // dispatch({
+        //     type: ARTICLE
+        // })
+    }
+}
+
+
 //fav article
 export const markFavourite = (slug) => async dispatch => {
     if (localStorage.token) {
