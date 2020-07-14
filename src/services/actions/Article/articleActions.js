@@ -1,4 +1,4 @@
-import {CREATE_ARTICLE, LIST_ARTICLES, GET_ARTICLE, MARK_FAV, MARK_UNFAV, FOLLOW_AUTHOR, DEL_ARTICLE, EDIT_ARTICLE, UNFOLLOW_AUTHOR} from '../actionTypes';
+import {CREATE_ARTICLE, LIST_ARTICLES, GET_ARTICLE, MARK_FAV, MARK_UNFAV, FOLLOW_AUTHOR, DEL_ARTICLE, EDIT_ARTICLE, LIST_ARTICLES_BY_AUTHOR, UNFOLLOW_AUTHOR} from '../actionTypes';
 import axios from 'axios';
 import setAuthToken from '../../../utils/setAuthToken';
 
@@ -81,22 +81,22 @@ export const editArticle = (slug,newArticle) => async dispatch => {
 
 //Get a single article
 export const getArticle = (slug) => async dispatch => {
-    if (localStorage.token) {
-        setAuthToken(localStorage.token);
-    }
+        if (localStorage.token) {
+            setAuthToken(localStorage.token);
+        }
 
-    try {
-        const res = await axios.get(`https://conduit.productionready.io/api/articles/${slug}`);
-        dispatch({
-            type: GET_ARTICLE,
-            payload: res.data
-        });
-    }
-    catch (err) {
-        // dispatch({
-        //     type: ARTICLE
-        // })
-    }
+        try {
+            const res = await axios.get(`https://conduit.productionready.io/api/articles/${slug}`);
+            dispatch({
+                type: GET_ARTICLE,
+                payload: res.data
+            });
+        }
+        catch (err) {
+            // dispatch({
+            //     type: ARTICLE
+            // })
+        }
 }
 
 //Getmy feed articles
@@ -132,6 +132,53 @@ export const listArticles = () => async dispatch => {
     //const body = JSON.stringify(newArticle);
     try {
         const res = await axios.get('https://conduit.productionready.io/api/articles', config);
+        dispatch({
+            type: LIST_ARTICLES,
+            payload: res.data
+        });
+    }
+    catch (err) {
+        // dispatch({
+        //     type: ARTICLE
+        // })
+    }
+}
+
+//Get all articles by author
+export const listArticlesByAuthor = (author) => async dispatch => {
+    const token = localStorage.token;
+    const config = {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }
+
+    //const body = JSON.stringify(newArticle);
+    try {
+        const res = await axios.get(`https://conduit.productionready.io/api/articles?author=${author}`, config);
+        dispatch({
+            type: LIST_ARTICLES,
+            payload: res.data
+        });
+    }
+    catch (err) {
+        // dispatch({
+        //     type: ARTICLE
+        // })
+    }
+}
+
+export const listFavoritedArticles = (author) => async dispatch => {
+    const token = localStorage.token;
+    const config = {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }
+
+    //const body = JSON.stringify(newArticle);
+    try {
+        const res = await axios.get(`https://conduit.productionready.io/api/articles?favorited=${author}`, config);
         dispatch({
             type: LIST_ARTICLES,
             payload: res.data

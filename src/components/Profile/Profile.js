@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import ArticleCard from '../ArticleCard/ArticleCard';
 import {getProfile, followAuthor, unFollowAuthor} from '../../services/actions/Profile/profileActions';
+import {listArticlesByAuthor, listFavoritedArticles, markFavourite, markUnFavourite} from '../../services/actions/Article/articleActions';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import './Profile.scss';
@@ -17,6 +19,7 @@ class Profile extends React.Component {
     }
 
     componentDidMount() {
+        this.props.listArticlesByAuthor(this.props.match.params.username);
         this.props.getProfile(this.props.match.params.username);
     }
 
@@ -38,6 +41,13 @@ class Profile extends React.Component {
     componentDidUpdate(prevProps) {
         if (this.props.match.params.username !== prevProps.match.params.username) {
             this.props.getProfile(this.props.match.params.username);
+            if(this.state.myFeed === true){
+                this.props.listArticlesByAuthor(this.props.match.params.username);
+            }
+            else{
+                this.props.listFavoritedArticles(this.props.match.params.username);
+            }
+            
         }
     }
 
@@ -57,8 +67,31 @@ class Profile extends React.Component {
         }
     }
 
+    handleClick = (status,e) => {
+        if(status === 'myArticles'){
+            this.setState({myFeed:true});
+            this.props.listArticlesByAuthor(this.props.match.params.username);
+        }
+        else{
+            this.setState({myFeed:false});
+            this.props.listFavoritedArticles(this.props.match.params.username);
+        }
+    }
+
+    changeFav = (slug,status,e) => {
+        if(status === 'mark_fav')
+            this.props.markFavourite(slug); 
+        else{
+            this.props.markUnFavourite(slug)
+        }     
+    }
+
 
     render() {
+        const {articles} = this.props;
+        let articlesList = articles && articles.map((article,index)=>{
+            return <ArticleCard key = {index} article={article} changeFav={this.changeFav} isAuthenticated = {this.props.isAuthenticated}/>
+        });
         const globalClass = this.state.myFeed ? 'links myFeed' : 'links';
         const localClass = !this.state.myFeed ? 'links favArticles' : 'links';
         const followUnfollow = this.state.followed ? 'Unfollow' : 'Follow';
@@ -86,10 +119,11 @@ class Profile extends React.Component {
                 <br />
                 <div className='container'>
                     <ul className='custom-nav-links'>
-                        <li className={localClass}>My articles</li>
-                        <li className={globalClass}>Favourite Articles</li>
+                        <li className={globalClass} onClick={this.handleClick.bind(this,'myArticles')}>My articles</li>
+                        <li className={localClass} onClick={this.handleClick.bind(this,'favArticles')}>Favourite Articles</li>
                     </ul>
-                    <hr style={{ margin: "0 0" }} />
+                    <hr style={{marginTop:"-1px"}}></hr>
+                            {articlesList}
                 </div>
             </>
         )
@@ -101,11 +135,17 @@ Profile.propTypes = {
     getProfile: PropTypes.func.isRequired,
     user: PropTypes.object.isRequired,
     followAuthor:PropTypes.func.isRequired,
-    unFollowAuthor: PropTypes.func.isRequired
+    unFollowAuthor: PropTypes.func.isRequired,
+    listArticlesByAuthor: PropTypes.func.isRequired,
+    markUnFavourite: PropTypes.func.isRequired,
+    markFavourite: PropTypes.func.isRequired,
+    listFavoritedArticles: PropTypes.func.isRequired
 }
 
 const mapStateToProps = state => ({
     profile: state.profile.profile,
-    user: state.auth.user
+    user: state.auth.user,
+    articles: state.article.articles,
+    isAuthenticated: state.auth.isAuthenticated
 });
-export default connect(mapStateToProps, { getProfile, followAuthor, unFollowAuthor })(Profile);
+export default connect(mapStateToProps, { getProfile, followAuthor, unFollowAuthor,listArticlesByAuthor, listFavoritedArticles, markFavourite, markUnFavourite })(Profile);

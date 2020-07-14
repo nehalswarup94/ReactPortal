@@ -1,4 +1,4 @@
-import {CREATE_ARTICLE, LIST_ARTICLES, GET_ARTICLE, MARK_FAV, MARK_UNFAV, DEL_ARTICLE, EDIT_ARTICLE} from '../actions/actionTypes';
+import {CREATE_ARTICLE, LIST_ARTICLES, GET_ARTICLE, MARK_FAV, MARK_UNFAV, DEL_ARTICLE, EDIT_ARTICLE,LIST_ARTICLES_BY_AUTHOR} from '../actions/actionTypes';
 
 const initialState={
     article:{},
