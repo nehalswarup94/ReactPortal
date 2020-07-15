@@ -2,12 +2,12 @@ import React from 'react';
 import './Posts.scss';
 import ArticleCard from '../ArticleCard/ArticleCard.js';
 import Tags from '../Tags/Tags';
-import {Link} from 'react-router-dom';
 import {listArticles, markFavourite, markUnFavourite, listMyArticles, listArticlesByTags} from '../../services/actions/Article/articleActions';
 import {unSetTag} from '../../services/actions/Tags/tagActions';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import Pagination from "react-js-pagination";
+import Skeleton from 'react-loading-skeleton';
 
 class Posts extends React.Component {
     state={
@@ -15,15 +15,19 @@ class Posts extends React.Component {
         loading:true,
         activePage: 1
     }
-    componentDidMount(){
+    
+    async componentDidMount(){
+        await this.setState({
+            loading:true
+        });
         this.props.listArticles(0);
-        this.setState({
+        await this.setState({
             loading:false
         });
     }
 
-    fetchArticles = (activeLink,e) => {
-        this.setState({
+    fetchArticles = async(activeLink,e) => {
+        await this.setState({
             loading:true,
             activePage:1
         });
@@ -34,16 +38,13 @@ class Posts extends React.Component {
             this.props.listArticles(0);
         }
         else{
-            this.setState({
-                loading:true
-            });
             this.props.listMyArticles(0);
             this.setState({
                 global:false
             });
         }
         this.props.unSetTag();
-        this.setState({
+        await this.setState({
             loading:false
         });
     }
@@ -96,7 +97,7 @@ class Posts extends React.Component {
                                 <li className={tagClass}>{this.props.tag}</li>}
                             </ul>
                             <hr style={{marginTop:"-1px"}}></hr>
-                            {this.state.loading? 'Loading...':
+                            {this.state.loading? <Skeleton/>:
                             articlesList}
                         </div>
                         <div className='col-xs-12 col-sm-2'>
@@ -106,7 +107,7 @@ class Posts extends React.Component {
 
                     <br/>
                     {/* Pagination */}
-                    {!this.state.loading && 
+                    {!this.state.loading ? 
                     <div className='pagination-div'>
                         <Pagination
                         activePage={this.state.activePage}
@@ -117,7 +118,7 @@ class Posts extends React.Component {
                         itemClass="page-item"
                         linkClass="page-link"
                         />
-                    </div>}
+                    </div> : <Skeleton/>}
                 </div>
             </>
         )

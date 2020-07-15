@@ -7,6 +7,7 @@ import Comments from '../Comments/Comments.js';
 import CommentsList from '../Comments/CommentsList.js';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import Skeleton from 'react-loading-skeleton';
 
 class Article extends React.Component {
 
@@ -125,7 +126,7 @@ class Article extends React.Component {
                     </div>
 
                     <div className='container'>
-                        <h3>{this.state.loading?'Loading..':article.article && article.article.description}</h3>
+                        <h3>{this.state.loading?<Skeleton/>:article.article && article.article.description}</h3>
                         <br /><br />
                         <hr />
                         <div className='container comment-section'>

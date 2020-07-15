@@ -33,3 +33,21 @@
         }
     }
 }
+
+@media screen and (max-width: 480px) {
+    .portal-header{
+        display:flex;
+        flex-direction: column;
+
+
+        .portal-link{
+            flex-basis: 100%;
+        }
+    
+        .options{
+            flex-basis: 100%;
+            display: flex;
+            flex-direction: column;
+       }
+    }
+}

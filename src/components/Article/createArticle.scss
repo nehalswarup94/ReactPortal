@@ -23,3 +23,9 @@
         float: right;
     }
 }
+
+@media screen and (max-width: 480px) {
+    .article-title,.article-desc,.article-body,.article-tags{
+        width: 100%;
+    }
+}

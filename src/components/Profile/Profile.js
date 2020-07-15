@@ -6,6 +6,7 @@ import {listArticlesByAuthor, listFavoritedArticles, markFavourite, markUnFavour
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import './Profile.scss';
+import Skeleton from 'react-loading-skeleton';
 
 class Profile extends React.Component {
     constructor(props) {
@@ -15,12 +16,15 @@ class Profile extends React.Component {
             profile: this.props.profile,
             param: this.props.match.params.username,
             followed: this.props.profile.following,
+            loading:true
         }
     }
 
     componentDidMount() {
+        this.setState({loading:true});
         this.props.listArticlesByAuthor(this.props.match.params.username);
         this.props.getProfile(this.props.match.params.username);
+        this.setState({loading:false});
     }
 
     static getDerivedStateFromProps(props, state) {
@@ -68,6 +72,7 @@ class Profile extends React.Component {
     }
 
     handleClick = (status,e) => {
+        this.setState({loading:true});
         if(status === 'myArticles'){
             this.setState({myFeed:true});
             this.props.listArticlesByAuthor(this.props.match.params.username);
@@ -76,6 +81,7 @@ class Profile extends React.Component {
             this.setState({myFeed:false});
             this.props.listFavoritedArticles(this.props.match.params.username);
         }
+        this.setState({loading:false});
     }
 
     changeFav = (slug,status,e) => {
@@ -102,7 +108,7 @@ class Profile extends React.Component {
                     <img src="https://static.productionready.io/images/smiley-cyrus.jpg"
                         style={{ height: "5rem", width: "5rem", borderRadius: "5rem" }}></img>
                     <h3>{this.props.match.params.username}</h3>
-                    <h6>{this.props.profile.bio}</h6>
+                    <h6>{this.state.loading ? 'Loading..' : this.props.profile.bio}</h6>
                     </div>
                     <div className='button'>
                         <button className='btn btn-secondary' 
@@ -123,7 +129,8 @@ class Profile extends React.Component {
                         <li className={localClass} onClick={this.handleClick.bind(this,'favArticles')}>Favourite Articles</li>
                     </ul>
                     <hr style={{marginTop:"-1px"}}></hr>
-                            {articlesList}
+                    {this.state.loading ? <Skeleton count={5}/> :
+                    articlesList}
                 </div>
             </>
         )
