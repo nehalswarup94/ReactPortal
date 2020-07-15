@@ -100,14 +100,14 @@ export const getArticle = (slug) => async dispatch => {
 }
 
 //Getmy feed articles
-export const listMyArticles = () => async dispatch => {
+export const listMyArticles = (offset) => async dispatch => {
     if (localStorage.token) {
         setAuthToken(localStorage.token);
     }
 
     //const body = JSON.stringify(newArticle);
     try {
-        const res = await axios.get('https://conduit.productionready.io/api/articles/feed');
+        const res = await axios.get(`https://conduit.productionready.io/api/articles/feed?limit=10&offset=${offset}`);
         dispatch({
             type: LIST_ARTICLES,
             payload: res.data
@@ -121,7 +121,7 @@ export const listMyArticles = () => async dispatch => {
 }
 
 //Get all articles array
-export const listArticles = () => async dispatch => {
+export const listArticles = (offset) => async dispatch => {
     const token = localStorage.token;
     const config = {
         headers: {
@@ -131,7 +131,7 @@ export const listArticles = () => async dispatch => {
 
     //const body = JSON.stringify(newArticle);
     try {
-        const res = await axios.get('https://conduit.productionready.io/api/articles', config);
+        const res = await axios.get(`https://conduit.productionready.io/api/articles?limit=10&offset=${offset}`, config);
         dispatch({
             type: LIST_ARTICLES,
             payload: res.data
@@ -191,7 +191,7 @@ export const listFavoritedArticles = (author) => async dispatch => {
     }
 }
 
-export const listArticlesByTags = (tag) => async dispatch => {
+export const listArticlesByTags = (tag,offset) => async dispatch => {
     const token = localStorage.token;
     const config = {
         headers: {
@@ -201,7 +201,7 @@ export const listArticlesByTags = (tag) => async dispatch => {
 
     //const body = JSON.stringify(newArticle);
     try {
-        const res = await axios.get(`https://conduit.productionready.io/api/articles?tag=${tag}`, config);
+        const res = await axios.get(`https://conduit.productionready.io/api/articles?tag=${tag}&limit=10&offset=${offset}`, config);
         dispatch({
             type: LIST_ARTICLES,
             payload: res.data

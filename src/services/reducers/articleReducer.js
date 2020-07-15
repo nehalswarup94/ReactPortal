@@ -2,7 +2,8 @@ import {CREATE_ARTICLE, LIST_ARTICLES, GET_ARTICLE, MARK_FAV, MARK_UNFAV, DEL_AR
 
 const initialState={
     article:{},
-    articles:[]
+    articles:[],
+    articlesCount:0
 }
 
 export default function(state=initialState,action){
@@ -16,7 +17,8 @@ export default function(state=initialState,action){
         case LIST_ARTICLES:
             return {
                 ...state,
-                articles:action.payload.articles
+                articles:action.payload.articles,
+                articlesCount: action.payload.articlesCount
             }
         case MARK_FAV:
         case MARK_UNFAV:

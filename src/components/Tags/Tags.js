@@ -12,7 +12,8 @@ class Tags extends React.Component{
     }
 
     setTag = (tag,e) => {
-        this.props.listArticlesByTags(tag);
+        let offset = (10*this.props.activePage)-10;
+        this.props.listArticlesByTags(tag,offset);
         this.props.setTag(tag);
     }
     render(){

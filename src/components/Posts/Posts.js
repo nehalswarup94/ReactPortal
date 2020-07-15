@@ -3,33 +3,49 @@ import './Posts.scss';
 import ArticleCard from '../ArticleCard/ArticleCard.js';
 import Tags from '../Tags/Tags';
 import {Link} from 'react-router-dom';
-import {listArticles, markFavourite, markUnFavourite, listMyArticles} from '../../services/actions/Article/articleActions';
+import {listArticles, markFavourite, markUnFavourite, listMyArticles, listArticlesByTags} from '../../services/actions/Article/articleActions';
 import {unSetTag} from '../../services/actions/Tags/tagActions';
 import PropTypes from 'prop-types';
-import {connect} from 'react-redux'
+import {connect} from 'react-redux';
+import Pagination from "react-js-pagination";
 
 class Posts extends React.Component {
     state={
-        global:true
+        global:true,
+        loading:true,
+        activePage: 1
     }
     componentDidMount(){
-        this.props.listArticles();
+        this.props.listArticles(0);
+        this.setState({
+            loading:false
+        });
     }
 
     fetchArticles = (activeLink,e) => {
+        this.setState({
+            loading:true,
+            activePage:1
+        });
         if(activeLink === 'global'){
             this.setState({
                 global:true
             });
-            this.props.listArticles();
+            this.props.listArticles(0);
         }
         else{
-            this.props.listMyArticles();
+            this.setState({
+                loading:true
+            });
+            this.props.listMyArticles(0);
             this.setState({
                 global:false
             });
         }
         this.props.unSetTag();
+        this.setState({
+            loading:false
+        });
     }
 
     changeFav = (slug,status,e) => {
@@ -39,6 +55,20 @@ class Posts extends React.Component {
             this.props.markUnFavourite(slug)
         }     
     }
+
+    handlePageChange(pageNumber) {
+        this.setState({activePage: pageNumber});
+        let offset = (10*pageNumber)-10;
+        if(this.state.global === true && this.props.tag===''){
+            this.props.listArticles(offset);
+        }
+        else if(this.state.global === false && this.props.tag===''){
+            this.props.listMyArticles(offset);
+        }
+        else if(this.props.tag!==''){
+            this.props.listArticlesByTags(this.props.tag,offset);
+        }
+      }
 
     render() {
         const {articles} = this.props;
@@ -66,12 +96,28 @@ class Posts extends React.Component {
                                 <li className={tagClass}>{this.props.tag}</li>}
                             </ul>
                             <hr style={{marginTop:"-1px"}}></hr>
-                            {articlesList}
+                            {this.state.loading? 'Loading...':
+                            articlesList}
                         </div>
                         <div className='col-xs-12 col-sm-2'>
-                            <Tags/>
+                            <Tags activePage={this.state.activePage}/>
                     </div>
                     </div>
+
+                    <br/>
+                    {/* Pagination */}
+                    {!this.state.loading && 
+                    <div className='pagination-div'>
+                        <Pagination
+                        activePage={this.state.activePage}
+                        itemsCountPerPage={10}
+                        totalItemsCount={this.props.articlesCount}
+                        pageRangeDisplayed={5}
+                        onChange={this.handlePageChange.bind(this)}
+                        itemClass="page-item"
+                        linkClass="page-link"
+                        />
+                    </div>}
                 </div>
             </>
         )
@@ -84,12 +130,14 @@ Posts.propTypes = {
     articles: PropTypes.array.isRequired,
     markFavourite: PropTypes.func.isRequired,
     markUnFavourite: PropTypes.func.isRequired,
-    unSetTag: PropTypes.func.isRequired
+    unSetTag: PropTypes.func.isRequired,
+    listArticlesByTags: PropTypes.func.isRequired
 }
 
 const mapStateToProps = state => ({
     articles:state.article.articles,
+    articlesCount: state.article.articlesCount,
     isAuthenticated: state.auth.isAuthenticated,
     tag: state.tag.tag
 });
-export default connect(mapStateToProps,{listArticles, listMyArticles ,markFavourite, markUnFavourite, unSetTag})(Posts);
+export default connect(mapStateToProps,{listArticles, listMyArticles ,markFavourite, listArticlesByTags,markUnFavourite, unSetTag})(Posts);

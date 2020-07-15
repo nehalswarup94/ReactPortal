@@ -62,3 +62,24 @@
         border-bottom: 2px solid $heading_color;
     }
 }
+
+.pagination-div{
+    display: flex;
+    justify-content: center;
+
+    .pagination{
+        .page-link{
+            color:$heading_color;
+        }
+        .page-item.active .page-link {
+            z-index: 3;
+            color: #fff !important;
+            background-color: $heading_color;
+            border-color:  $heading_color;
+        }
+
+        
+    }
+
+    
+}
