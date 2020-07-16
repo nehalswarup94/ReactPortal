@@ -1,6 +1,6 @@
 @import '../../config_colors.scss'; 
 
-.portal-header{
+.portal-header, .portal-header-one{
     font-family:titillium web,sans-serif;
     color:$heading_color;
     padding: 1rem 2rem;
@@ -34,8 +34,19 @@
     }
 }
 
+.portal-header-one{
+    .portal-link{
+        flex-basis: 85%;
+    }
+
+    .options{
+        flex-basis: 15%;
+    }
+
+}
+
 @media screen and (max-width: 480px) {
-    .portal-header{
+    .portal-header, .portal-header-one{
         display:flex;
         flex-direction: column;
 
