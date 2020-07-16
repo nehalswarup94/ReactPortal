@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/myportal/static/css/main.08599511.chunk.css",
+    "main.js": "/myportal/static/js/main.41638e7e.chunk.js",
+    "main.js.map": "/myportal/static/js/main.41638e7e.chunk.js.map",
+    "runtime-main.js": "/myportal/static/js/runtime-main.9ad5144d.js",
+    "runtime-main.js.map": "/myportal/static/js/runtime-main.9ad5144d.js.map",
+    "static/js/2.5c616f49.chunk.js": "/myportal/static/js/2.5c616f49.chunk.js",
+    "static/js/2.5c616f49.chunk.js.map": "/myportal/static/js/2.5c616f49.chunk.js.map",
+    "index.html": "/myportal/index.html",
+    "precache-manifest.65bbc55ac0900b2c3ce7da951d00c09f.js": "/myportal/precache-manifest.65bbc55ac0900b2c3ce7da951d00c09f.js",
+    "service-worker.js": "/myportal/service-worker.js",
+    "static/css/main.08599511.chunk.css.map": "/myportal/static/css/main.08599511.chunk.css.map",
+    "static/js/2.5c616f49.chunk.js.LICENSE.txt": "/myportal/static/js/2.5c616f49.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.9ad5144d.js",
+    "static/js/2.5c616f49.chunk.js",
+    "static/css/main.08599511.chunk.css",
+    "static/js/main.41638e7e.chunk.js"
+  ]
+}
