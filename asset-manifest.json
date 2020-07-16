@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/ReactPortal/static/css/main.08599511.chunk.css",
+    "main.css": "/ReactPortal/static/css/main.b6dbcccc.chunk.css",
     "main.js": "/ReactPortal/static/js/main.d1df9517.chunk.js",
     "main.js.map": "/ReactPortal/static/js/main.d1df9517.chunk.js.map",
     "runtime-main.js": "/ReactPortal/static/js/runtime-main.451d458f.js",
@@ -8,15 +8,15 @@
     "static/js/2.5c616f49.chunk.js": "/ReactPortal/static/js/2.5c616f49.chunk.js",
     "static/js/2.5c616f49.chunk.js.map": "/ReactPortal/static/js/2.5c616f49.chunk.js.map",
     "index.html": "/ReactPortal/index.html",
-    "precache-manifest.d7c991dd917080874cf004f647460c87.js": "/ReactPortal/precache-manifest.d7c991dd917080874cf004f647460c87.js",
+    "precache-manifest.1b904839773297d70e34b8774b284bf9.js": "/ReactPortal/precache-manifest.1b904839773297d70e34b8774b284bf9.js",
     "service-worker.js": "/ReactPortal/service-worker.js",
-    "static/css/main.08599511.chunk.css.map": "/ReactPortal/static/css/main.08599511.chunk.css.map",
+    "static/css/main.b6dbcccc.chunk.css.map": "/ReactPortal/static/css/main.b6dbcccc.chunk.css.map",
     "static/js/2.5c616f49.chunk.js.LICENSE.txt": "/ReactPortal/static/js/2.5c616f49.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.451d458f.js",
     "static/js/2.5c616f49.chunk.js",
-    "static/css/main.08599511.chunk.css",
+    "static/css/main.b6dbcccc.chunk.css",
     "static/js/main.d1df9517.chunk.js"
   ]
 }
